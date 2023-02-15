@@ -1,0 +1,26 @@
+# create your drupal and postgres config here, based off the last assignment
+services:
+  drupal:
+    build: .
+    image: custom-drupal
+    ports:
+      - 8080:80
+    depends_on:
+      - postgres
+    volumes:
+      - drupal-data:/var/www/html
+
+  postgres:
+    # we use mariadb here for arm support
+    # mariadb is a fork of MySQL that's often faster and better multi-platform
+    image: postgres:14.3
+    environment:
+      - POSTGRES_PASSWORD=miaou
+      - POSTGRES_DB=drupal
+      - POSTGRES_USER=abonnel
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  drupal-data:
+  postgres-data:
